@@ -1,7 +1,7 @@
 __author__ = 'reyoung'
 
 import unittest
-from slidegen2.yaml_formatter import YAMLFormatter
+from slidegen2.document_formatters.yaml_formatter import YAMLFormatter
 
 
 class TestYamlFormatter(unittest.TestCase):

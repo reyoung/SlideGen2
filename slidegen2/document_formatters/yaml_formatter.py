@@ -5,7 +5,7 @@ try:
 except ImportError:
     print("Using pure python YAML loader, it may be slow.")
     from yaml import Loader
-from iengine import IDocumentFormatter
+from slidegen2.iengine import IDocumentFormatter
 
 __author__ = 'reyoung'
 
