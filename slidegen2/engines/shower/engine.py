@@ -2,7 +2,7 @@
 from slidegen2.iengine import IEngine
 from slidegen2.text_formatters import markdown_formatter
 from slidegen2.util import get_formatter, get_text_formatter
-from slidegen2.engines.shower.commands import all_command
+#from slidegen2.engines.shower.commands import all_command
 
 __author__ = 'reyoung'
 
@@ -28,8 +28,9 @@ class ShowerEngine(IEngine):
         if fmt is None:
             fmt = markdown_formatter
         eng.set_text_formatter(fmt)
-        for cmd in all_command:
-            eng.add_command(cmd)
+        from slidegen2.engines.shower.commands import author, title
+        eng.add_command(author)
+        eng.add_command(title)
         return eng
 
 
@@ -37,6 +38,11 @@ if __name__ == "__main__":
     test_data = """
 $title: |
      *Title Of Slide*
+---
+$author:
+  name: reyoung
+  email: reyoung@126.com
 """
     eng = ShowerEngine.instance({"content": test_data})
     eng.process()
+    #print eng.__context

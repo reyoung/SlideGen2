@@ -31,7 +31,6 @@ class IEngine(object):
     def add_command(self, cmd):
         """
         @param cmd: add slide engine command
-        @type cmd: ICommand
         @return:
         """
         self.__commands[cmd.get_key()] = cmd

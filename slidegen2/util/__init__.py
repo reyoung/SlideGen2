@@ -1,5 +1,6 @@
 from slidegen2.document_formatters.yaml_formatter import YAMLFormatter
 from slidegen2.text_formatters import markdown_formatter
+import functools
 
 __author__ = 'reyoung'
 
@@ -36,3 +37,12 @@ def get_text_formatter(config):
             return markdown_formatter
     else:
         return None
+
+
+def extract_text_formatter(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        fmt = get_text_formatter(kwargs['text_formatter'])
+        return f(fmt=fmt, *args, **kwargs)
+
+    return wrapper
