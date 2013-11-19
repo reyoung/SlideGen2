@@ -1,3 +1,4 @@
+import sys
 from slidegen2.document_formatters.yaml_formatter import YAMLFormatter
 from slidegen2.text_formatters import markdown_formatter
 import functools
@@ -46,3 +47,21 @@ def extract_text_formatter(f):
         return f(fmt=fmt, *args, **kwargs)
 
     return wrapper
+
+
+def str2bool(a):
+    """
+    @param a:
+    @return:
+    @type a: str
+    @rtype: bool
+    """
+    if a.lower() == "true":
+        return True
+    else:
+        return False
+
+
+def command_type_mismatch(params):
+    print >> sys.stderr, "Param type is not correct"
+    print >> sys.stderr, params

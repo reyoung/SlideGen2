@@ -1,13 +1,11 @@
-from slidegen2.util import get_text_formatter_method
-import sys
+from slidegen2.util import get_text_formatter_method, command_type_mismatch
+
 __author__ = 'reyoung'
 
 
 def get_key():
     return "$author"
 
-
-#@extract_text_formatter
 def process(params, context, text_formatter, *args, **kwargs):
     """
     Process Author Command of shower
@@ -30,5 +28,4 @@ def process(params, context, text_formatter, *args, **kwargs):
         if email is not None:
             context['email'] = fmt(author)
     else:
-        print >> sys.stderr, "Param type is not correct"
-        print >> sys.stderr, context
+        command_type_mismatch(params)
