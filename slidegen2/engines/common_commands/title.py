@@ -23,3 +23,4 @@ def process(params, context, text_formatter, *args, **kwargs):
     fmt = get_text_formatter_method(text_formatter)
     if isinstance(params, str):
         context["title"] = fmt(params)
+        context['raw_title']=params
