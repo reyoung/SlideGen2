@@ -1,6 +1,7 @@
 # *-* coding=utf-8 *-*
 from slidegen2.engines.common_commands import title, author
 from slidegen2.engines.common_commands import math as cmd_math
+from slidegen2.engines.shower.commands import slide
 from slidegen2.iengine import IEngine
 from slidegen2.text_formatters import markdown_formatter
 from slidegen2.util import get_formatter, get_text_formatter
@@ -16,7 +17,7 @@ class ShowerEngine(IEngine):
 
     def begin_process(self, *args, **kwargs):
         self.__context.clear()
-        self.__context["doc_root"] = "shower"
+        self.__context["engine_root"] = "shower"
         self.__context["theme_name"] = "bright"
 
     def process(self, output_param):
@@ -31,7 +32,12 @@ class ShowerEngine(IEngine):
     <meta charset="utf-8" />
     <meta name="viewport" content="width=680, user-scalable=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <link rel="stylesheet" href="{{ doc_root }}/themes/{{theme_name}}/styles/screen.css" />
+    <link rel="stylesheet" href="{{ engine_root }}/themes/{{theme_name}}/styles/screen.css" />
+    {% if math is not none and math.enabled %}
+        {% if math.use_cdn %}
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        {% endif %}
+    {% endif %}
 </head>
 <body class="list">
     <header class="caption">
@@ -44,8 +50,9 @@ class ShowerEngine(IEngine):
         </h3>
         {% endif %}
     </header>
+    {{ result }}
     <div class="progress"><div></div></div>
-    <script src="{{ doc_root }}/shower.js"></script>
+    <script src="{{ engine_root }}/shower.js"></script>
 </body>
 </html>
 """)
@@ -64,6 +71,7 @@ class ShowerEngine(IEngine):
         eng.add_command(author)
         eng.add_command(title)
         eng.add_command(cmd_math)
+        eng.add_command(slide)
         return eng
 
 
@@ -78,6 +86,12 @@ $author:
 ---
 $math: |
     true
+---
+slide:
+  id: 1
+  content: |
+     ## abc
+  need_escape: true
 """
     eng = ShowerEngine.instance({"content": test_data})
     print eng.process({"type": "html"})
