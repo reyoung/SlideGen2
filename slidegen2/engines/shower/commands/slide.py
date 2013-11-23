@@ -1,4 +1,5 @@
 from jinja2 import Template
+from slidegen2.engines.shower.commands import insert_result_into_context
 
 __author__ = 'reyoung'
 
@@ -21,7 +22,4 @@ def process(params, context, text_formatter, *args, **kwargs):
             params["content"] = content
         tpl = Template(tplStr)
         rst = tpl.render(**params)
-        result = context.get("result", "")
-        result = """%s
-%s""" % (result, rst)
-        context["result"] = result
+        insert_result_into_context(context, rst)

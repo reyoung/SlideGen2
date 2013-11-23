@@ -12,7 +12,12 @@ def process(text):
     @type text: str
     @return: markdown str
     """
-    return md.convert(text)
+    if isinstance(text, str) or isinstance(text, unicode):
+        return md.convert(text)
+    elif isinstance(text, int) or isinstance(text, float):
+        return md.convert(str(text))
+    else:
+        return text
 
 
 if __name__ == "__main__":

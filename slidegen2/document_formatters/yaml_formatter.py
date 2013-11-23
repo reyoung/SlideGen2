@@ -1,5 +1,4 @@
 from yaml import load_all
-
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -28,5 +27,6 @@ class YAMLFormatter(IDocumentFormatter):
         if isinstance(item, dict) and len(item) == 1:
             key = item.iterkeys().__iter__().next()
             value = item[key]
+
             return key, value
 

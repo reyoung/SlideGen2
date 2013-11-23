@@ -11,14 +11,17 @@ def get_key():
 def process(params, context, *args, **kwargs):
     enabled = False
     use_cdn = True
+    marker = "$"
     if isinstance(params, str):
         enabled = str2bool(params),
     elif isinstance(params, dict):
         enabled = str2bool(params.get('enabled', ''))
         use_cdn = str2bool(params.get('use_cdn', 'true'))
+        marker = params.get("marker", marker)
     else:
         command_type_mismatch(params)
     context['math'] = {
         'enabled': enabled,
-        'use_cdn': use_cdn
+        'use_cdn': use_cdn,
+        'marker': marker
     }
